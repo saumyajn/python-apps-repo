@@ -1,16 +1,20 @@
 import requests
 import random
 from hangman_art import logo, stages
+from hangman_words import backup_word_list
 
 print(logo)
 
 
 # Function to get random 100 words
 def get_word_list():
-    response = requests.get("https://random-word-api.herokuapp.com/word?number=100")
+    response = requests.get(
+        "https://random-word-api.herokuapp.com/word?number=100&diff=1"
+    )
     if response.status_code == 200:
         return response.json()  # Returns a Python list of strings
-    return []
+    else:
+        return backup_word_list
 
 
 print("Welcome!\nA word has been randomly generated. Lets play!!")
