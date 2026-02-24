@@ -1,22 +1,20 @@
-import random
-import string
+import random as random
+import string as string
 
-print("Welcome to the PyPassword Generator!")
-nr_letters = int(input("How many letters?\n"))
-nr_symbols = int(input("How many symbols?\n"))
-nr_numbers = int(input("How many numbers?\n"))
+no_letters = int(letters)
+no_symbols = int(symbols)
+no_numbers = int(numbers)
 
-# 1. Define character pools using the string library
+
 letters = string.ascii_letters
 numbers = string.digits
 symbols = "!#$%&()*+"
-random_letters = random.choices(letters,k=nr_letters)
-random_symbols =random.choices(symbols,k=nr_symbols)
-random_num = random.choices(numbers,k=nr_numbers)
+random_letters = random.choices(letters, k=no_letters)
+random_symbols = random.choices(symbols, k=no_symbols)
+random_num = random.choices(numbers, k=no_numbers)
 
-random_password ="".join(random_letters+random_symbols+random_num)
-print(f"Your random password is: {random_password}")
+temp = "".join(random_letters + random_symbols + random_num)
+random_password = "".join(random.sample(temp, len(temp)))
 
-print(f"Your extreme random password is: {"".join(random.sample(random_password, len(random_password)))}")
-
-
+print(f"Your extreme random password is: {random_password}")
+print(f"Length of password: {len(random_password)}")
