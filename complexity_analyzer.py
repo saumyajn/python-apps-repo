@@ -1,29 +1,15 @@
 import ast
 
-# 👇 PASTE THE PYTHON CODE YOU WANT TO ANALYZE INSIDE THESE TRIPLE QUOTES 👇
-CODE_TO_ANALYZE = """
-def example_function(arr):
-    for i in arr:
-        for j in arr:
-            print(i, j)
-"""
-# 👆 ------------------------------------------------------------------ 👆
+# Grab the code directly from the Monaco Editor input
+code_to_parse = user_code if "user_code" in globals() else ""
 
-# Capture the code from the string above, or from the 'cmd' global if available
-user_code = cmd if "cmd" in globals() and cmd.strip() else CODE_TO_ANALYZE
-
-if not user_code.strip():
+if not code_to_parse.strip():
     print("Welcome to the Big-O Code Analyzer! 🔍")
     print("---------------------------------------")
-    print(
-        "Paste your Python code into the CODE_TO_ANALYZE variable at the top and hit Run."
-    )
-    print(
-        "I will analyze its Abstract Syntax Tree (AST) to estimate its Time Complexity."
-    )
+    print("Please paste some valid Python code into the editor above and hit Run.")
 else:
     try:
-        tree = ast.parse(user_code)
+        tree = ast.parse(code_to_parse)
 
         def get_max_depth(node, current_depth=0):
             max_depth = current_depth
@@ -44,14 +30,29 @@ else:
 
         if depth == 0:
             print("Estimated Time Complexity: O(1) or O(N)")
+            print(
+                "Reason: No loops were detected. \n(Note: Native Python functions under the hood may still be O(N))."
+            )
         elif depth == 1:
             print("Estimated Time Complexity: O(N) [Linear]")
+            print(
+                "Reason: Found a single loop. Execution time scales linearly with the input."
+            )
         elif depth == 2:
             print("Estimated Time Complexity: O(N^2) [Quadratic]")
+            print(
+                "Reason: Found nested loops (depth of 2). Typical for algorithms like Bubble Sort."
+            )
         elif depth == 3:
             print("Estimated Time Complexity: O(N^3) [Cubic]")
+            print(
+                "Reason: Found deeply nested loops (depth of 3). Watch out for bottlenecks!"
+            )
         else:
             print(f"Estimated Time Complexity: O(N^{depth})")
+            print(
+                "Reason: Found extremely deep nesting. You should definitely optimize this code."
+            )
 
         print("\n✅ Code parsed and analyzed successfully.")
 
